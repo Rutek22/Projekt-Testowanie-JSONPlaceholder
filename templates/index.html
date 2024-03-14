@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JSONPlaceholder</title>
+    <style>
+        * {
+            margin: 0 auto;
+            font-family: 'Helvetica';
+        }
+
+        .container {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background: #EEEEF0;
+        }
+
+        .content {
+            width: 70%;
+            display: flex;
+            flex-direction: column;
+            background: #FFFFFF;
+            box-shadow: 8px 8px 24px rgba(62, 62, 74, 1);
+        }
+
+        h3 {
+            color: #0D6EFD;
+            margin: 50px auto;
+            font-size: 4rem;
+        }
+
+        .navigation {
+            width: 100%;
+            margin-bottom: 50px;
+        }
+
+        ul {
+            width: 100%;
+            list-style: none;
+            display: flex;
+            padding: 0 0;
+        }
+
+        a {
+            width: 40%;
+            display: block;
+            text-decoration: none;
+            background: #0D6EFD;
+            text-align: center;
+            color: #FFFFFF;
+            padding: 20px 50px;
+            border: 1px solid #FFFFFF;
+            transition: 0.7s;
+        }
+
+        a:hover {
+            color: #0D6EFD;
+            background: #FFFFFF;
+            border: 1px solid #0D6EFD;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <h3>JsonPlaceholder</h3>
+            <div class="navigation">
+                <ul>
+                    <li><a href="{{ url_for('getPosts') }}">POSTY</a></li>
+                    <li><a href="{{ url_for('getAlbums') }}">ALBUMY</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
