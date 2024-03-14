@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Zdjęcia</title>
+    <style>
+        * {
+            margin: 0 auto;
+            font-family: 'Helvetica';
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            background: #EEEEF0;
+        }
+
+        .nav {
+            background: #FFFFFF;
+            width: 100%;
+            display: flex;
+            height: 70px;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #0D6EFD;
+        }
+
+        .name {
+            width: 40%;
+        }
+
+        .navigation {
+            width: 40%;
+        }
+
+        .nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        .nav a {
+            display: block;
+            text-decoration: none;
+            color: #0D6EFD;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .content {
+            margin: 0 auto;
+            background: #FFFFFF;
+            padding: 30px;
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 8px 8px 24px rgba(62, 62, 74, 1);
+            margin-bottom: 50px;
+        }
+
+        .album {
+            margin: 20px auto;
+            width: 90%;
+            padding: 40px;
+            border: 1px solid #0D6EFD;
+            box-shadow: 8px 8px 24px rgba(62, 62, 74, 1);
+        }
+
+        .album h2 {
+            font-size: 2rem;
+            color: #0D6EFD;
+            margin-bottom: 40px;
+        }
+
+        .photo {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .photo a {
+            padding: 5px;
+            margin: 20px auto;
+        }
+
+        .limit {
+            align-items: center;
+            background: #FFFFFF;
+            width: 100%;
+            margin: 20px auto;
+            padding: 30px 0;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        form {
+            display: flex;
+        }
+
+        .limit label {
+            font-size: 1.7rem;
+            color: #0D6EFD;
+            padding: 5px 0;
+        }
+
+        .limit input {
+            text-align: center;
+            font-size: 1.3rem;
+            width: 50px;
+            color: #0D6EFD;
+            border: 1px solid #0D6EFD;
+            margin: 0 20px;
+        }
+
+        .limit button {
+            border: 1px solid #FFFFFF;
+            background: #0D6EFD;
+            color: #FFFFFF;
+            padding: 5px 20px;
+            transition: 0.7s;
+            font-size: 1.5rem;
+        }
+
+        .limit button:hover {
+            border: 1px solid #0D6EFD;
+            background: #FFFFFF;
+            color: #0D6EFD;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <div class="name">
+                <h1>Albumy</h1>
+            </div>
+            <div class="navigation">
+                <ul>
+                    <li><a href="{{ url_for('index') }}">HOME</a></li>
+                    <li><a href="{{ url_for('getPosts') }}">POSTY</a></li>
+                    <li><a href="{{ url_for('getAlbums') }}">ALBUMY</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="limit">
+    <form method="GET" action="{{ url_for('getPhotosWithLimit', albumId=albumId, albumTitle=albumTitle, limit=limit) }}">
+        <label for="limit">Limit wyświetlanych zdjęć:</label>
+        <input type="number" id="limit" name="limit" min="1" max="50" value="{{ limit }}">
+        <button>Zastosuj</button>
+    </form>
+</div>
+
+        <div class="content">
+             <div class="album">
+                <h2>Album - {{ albumId }} - {{ albumTitle }} - oryginały</h2>
+                <div class="photo">
+                    {% for photo in photos if photo.albumId == albumId %}
+                        <a href="{{ photo.url }}" target="_blank"><img src="{{ photo.url }}" alt="{{ photo.title }}"></a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="album">
+                <h2>Album - {{ albumId }} - {{ albumTitle }} - miniatury</h2>
+                <div class="photo">
+                    {% for photo in photos %}
+                        <a href="{{ photo.thumbnailUrl }}" target="_blank"><img src="{{ photo.thumbnailUrl }}" alt="{{ photo.title }}"></a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+    document.getElementById('limit').addEventListener('change', function() {
+        var albumId = "{{ albumId }}";
+        var albumTitle = "{{ albumTitle }}";
+        var limit = this.value;
+        document.querySelector('.limit form').action = "/albums/" + albumId + "/photos/" + albumTitle + "/" + limit;
+    });
+</script>
+
+</body>
+</html>
