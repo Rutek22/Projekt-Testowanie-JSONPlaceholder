@@ -14,16 +14,19 @@ API_URL = 'https://jsonplaceholder.typicode.com/'
 
 # Konfiguracja obsługi logowania do pliku
 handler = RotatingFileHandler('app.log', maxBytes=10000, backupCount=1)
-handler.setLevel(logging.ERROR)  # Ustawienie poziomu logowania na ERROR, aby logować tylko błędy
+# Ustawienie poziomu logowania na ERROR, aby logować tylko błędy
+handler.setLevel(logging.ERROR)
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 handler.setFormatter(formatter)
 app.logger.addHandler(handler)
+
 
 # Obsługa błędów 404
 @app.errorhandler(404)
 def page_not_found(e):
     app.logger.error('Strona nie znaleziona: %s', e)
     return render_template('404.html'), 404
+
 
 # Obsługa błędów 500
 @app.errorhandler(500)
