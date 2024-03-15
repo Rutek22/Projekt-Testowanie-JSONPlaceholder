@@ -1,5 +1,5 @@
 # Biblioteki
-from flask import Flask, render_template,request, jsonify
+from flask import Flask, render_template, request, jsonify
 import requests
 import logging
 from logging.handlers import RotatingFileHandler
@@ -91,8 +91,7 @@ def getPostsWithLimit(limit_posts, limit_comments):
             posts = [post for post in posts if min_chars <= len(post['body'])
                      <= max_chars]
         except ValueError:
-            return (jsonify({'error' :"Invalid min_chars or max_chars values"})
-                     , 400)
+            return (jsonify({'error': "Invalid min_chars or max_chars values"}), 400)
     return render_template("posts.html",
                            posts=posts,
                            comments=comments,
