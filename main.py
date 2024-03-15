@@ -42,7 +42,7 @@ def index():
     return render_template("index.html")
 
 
-@app.route('/posts')# /posts - posts.html
+@app.route('/posts')  # /posts - posts.html
 def getPosts():
     limit_posts = 10  # Domyślny limit ustawiony na 10 dla postów
     # Pobranie danych o postach
@@ -91,8 +91,8 @@ def getPostsWithLimit(limit_posts, limit_comments):
             posts = [post for post in posts if min_chars <= len(post['body'])
                      <= max_chars]
         except ValueError:
-            return jsonify({'error':
-                                "Invalid min_chars or max_chars values"}), 400
+            return (jsonify({'error':"Invalid min_chars or max_chars values"})
+                    ,400)
     return render_template("posts.html",
                            posts=posts,
                            comments=comments,
@@ -100,7 +100,7 @@ def getPostsWithLimit(limit_posts, limit_comments):
                            limit_comments=limit_comments)
 
 
-@app.route('/albums') # /albums - albums.html
+@app.route('/albums')  # /albums - albums.html
 def getAlbums():
     limit = 10  # Domyślny limit ustawiony na 10
     # Pobranie danych o albumach
@@ -160,6 +160,6 @@ def getPhotosWithLimit(albumId, albumTitle, limit):
                            limit=limit)
 
 
-if __name__ == '__main__':# Uruchomienie aplikacji
-  # print("http://127.0.0.1:5000/")
+if __name__ == '__main__':  # Uruchomienie aplikacji
+    print("http://127.0.0.1:5000/")
     app.run(debug=True)
