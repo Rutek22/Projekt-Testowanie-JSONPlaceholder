@@ -92,7 +92,8 @@ def getPostsWithLimit(limit_posts, limit_comments):
                      <= max_chars]
         except ValueError:
             return \
-                (jsonify({'error': "Invalid min_chars or max_chars values"}), 400)
+                (jsonify
+                 ({'error': "Invalid min_chars or max_chars values"}), 400)
     return render_template("posts.html",
                            posts=posts,
                            comments=comments,
