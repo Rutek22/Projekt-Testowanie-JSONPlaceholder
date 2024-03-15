@@ -16,7 +16,8 @@ API_URL = 'https://jsonplaceholder.typicode.com/'
 handler = RotatingFileHandler('app.log', maxBytes=10000, backupCount=1)
 # Ustawienie poziomu logowania na ERROR, aby logować tylko błędy
 handler.setLevel(logging.ERROR)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter('%(asctime)s - %(name)s - 
+                               %(levelname)s - %(message)s')
 handler.setFormatter(formatter)
 app.logger.addHandler(handler)
 
