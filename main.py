@@ -79,11 +79,9 @@ def getPostsWithLimit(limit_posts, limit_comments):
     # Pobranie danych o postach
     response = requests.get(API_URL + 'posts')
     posts = response.json()[:100]
-
     # Pobranie komentarzy dla postow
     response_comments = requests.get(API_URL + 'comments')
     comments = response_comments.json()
-
     # Filtrowanie postów na podstawie liczby znaków w treści
     if min_chars is not None and max_chars is not None:
         try:
