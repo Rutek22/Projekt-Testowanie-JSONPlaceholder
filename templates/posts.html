@@ -190,7 +190,7 @@
         <label for="limit_comments">Limit wyświetlanych komentarzy: </label>
         <input type="number" id="limit_comments" name="limit_comments" min="1" max="5" value="{{ limit_comments }}">
         <label for="min_chars">Minimalna liczba znaków:</label>
-        <input type="number" id="min_chars" name="min_chars" min="0" required value="{{ min_chars }}">
+        <input type="number" id="min_chars" name="min_chars" min="0" required value="{{ min_chars }}" >
         <label for="max_chars">Maksymalna liczba znaków:</label>
         <input type="number" id="max_chars" name="max_chars" min="0" required value="{{ max_chars }}">
         <button>Zastosuj</button>
@@ -231,6 +231,10 @@
             var limitPosts = document.getElementById('limit_posts').value;
             document.querySelector('.limit form').action = "/posts/" + limitPosts + "/" + this.value;
         });
+        window.onload = function() {
+        document.getElementById('min_chars').value = 1; // Ustawienie wartości domyślnej dla minimalnej liczby znaków
+        document.getElementById('max_chars').value = 500; // Ustawienie wartości domyślnej dla maksymalnej liczby znaków
+    };
     </script>
 
 </body>

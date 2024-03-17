@@ -44,7 +44,8 @@ def index():
 
 @app.route('/posts')  # /posts - posts.html
 def getPosts():
-    limit_posts = 10  # Domyślny limit ustawiony na 10 dla postów
+
+    limit_posts = 100  # Domyślny limit ustawiony na 100 dla postów
     # Pobranie danych o postach
     response = requests.get(API_URL + 'posts')
     posts = response.json()[:limit_posts]
@@ -58,7 +59,7 @@ def getPosts():
                                  default=0, type=int)
     # Domyślnie maksymalna liczba znaków to 100
     max_chars = request.args.get('max_chars',
-                                 default=100, type=int)
+                                 default=500, type=int)
 
     return render_template("posts.html",
                            posts=posts,
@@ -77,7 +78,7 @@ def getPostsWithLimit(limit_posts, limit_comments):
     max_chars = request.args.get('max_chars')
     # Pobranie danych o postach
     response = requests.get(API_URL + 'posts')
-    posts = response.json()[:limit_posts]
+    posts = response.json()[:100]
 
     # Pobranie komentarzy dla postow
     response_comments = requests.get(API_URL + 'comments')
@@ -94,8 +95,10 @@ def getPostsWithLimit(limit_posts, limit_comments):
             return \
                 (jsonify
                  ({'error': "Invalid min_chars or max_chars values"}), 400)
+
+
     return render_template("posts.html",
-                           posts=posts,
+                           posts=posts[:limit_posts],
                            comments=comments,
                            limit_posts=limit_posts,
                            limit_comments=limit_comments)
