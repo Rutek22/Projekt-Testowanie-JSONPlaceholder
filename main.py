@@ -93,8 +93,6 @@ def getPostsWithLimit(limit_posts, limit_comments):
             return \
                 (jsonify
                  ({'error': "Invalid min_chars or max_chars values"}), 400)
-
-
     return render_template("posts.html",
                            posts=posts[:limit_posts],
                            comments=comments,
