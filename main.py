@@ -1,8 +1,9 @@
 # Biblioteki
-from flask import Flask, render_template
+from flask import Flask, render_template, request, jsonify
 import requests
 import logging
 from logging.handlers import RotatingFileHandler
+
 
 # Utworzenie obiektu aplikacji Flask
 app = Flask(__name__)
@@ -41,10 +42,10 @@ def index():
     return render_template("index.html")
 
 
-# /posts - posts.html
-@app.route('/posts')
+@app.route('/posts')  # /posts - posts.html
 def getPosts():
-    limit_posts = 10  # Domyślny limit ustawiony na 10 dla postów
+
+    limit_posts = 100  # Domyślny limit ustawiony na 100 dla postów
     # Pobranie danych o postach
     response = requests.get(API_URL + 'posts')
     posts = response.json()[:limit_posts]
@@ -53,33 +54,53 @@ def getPosts():
     # Pobranie komentarzy dla postow
     response_comments = requests.get(API_URL + 'comments')
     comments = response_comments.json()
+    # Domyślnie minimalna liczba znaków to 0
+    min_chars = request.args.get('min_chars',
+                                 default=0, type=int)
+    # Domyślnie maksymalna liczba znaków to 100
+    max_chars = request.args.get('max_chars',
+                                 default=500, type=int)
 
     return render_template("posts.html",
                            posts=posts,
                            comments=comments,
                            limit_posts=limit_posts,
-                           limit_comments=limit_comments)
+                           limit_comments=limit_comments,
+                           min_chars=min_chars,
+                           max_chars=max_chars)
 
 
 @app.route('/posts/<int:limit_posts>/<int:limit_comments>')
 def getPostsWithLimit(limit_posts, limit_comments):
+    # Pobranie minimalnej liczby znaków z parametru URL
+    min_chars = request.args.get('min_chars')
+    # Pobranie maksymalnej liczby znaków z parametru URL
+    max_chars = request.args.get('max_chars')
     # Pobranie danych o postach
     response = requests.get(API_URL + 'posts')
-    posts = response.json()[:limit_posts]
-
+    posts = response.json()[:100]
     # Pobranie komentarzy dla postow
     response_comments = requests.get(API_URL + 'comments')
     comments = response_comments.json()
-
+    # Filtrowanie postów na podstawie liczby znaków w treści
+    if min_chars is not None and max_chars is not None:
+        try:
+            min_chars = int(min_chars)
+            max_chars = int(max_chars)
+            posts = [post for post in posts if min_chars <= len(post['body'])
+                     <= max_chars]
+        except ValueError:
+            return \
+                (jsonify
+                 ({'error': "Invalid min_chars or max_chars values"}), 400)
     return render_template("posts.html",
-                           posts=posts,
+                           posts=posts[:limit_posts],
                            comments=comments,
                            limit_posts=limit_posts,
                            limit_comments=limit_comments)
 
 
-# /albums - albums.html
-@app.route('/albums')
+@app.route('/albums')  # /albums - albums.html
 def getAlbums():
     limit = 10  # Domyślny limit ustawiony na 10
     # Pobranie danych o albumach
@@ -132,7 +153,6 @@ def getPhotosWithLimit(albumId, albumTitle, limit):
     # Pobranie zdjęć dla danego albumu
     response = requests.get(API_URL + 'photos', params={'albumId': albumId})
     photos = response.json()[:limit]
-
     return render_template("photos.html",
                            photos=photos,
                            albumId=albumId,
@@ -140,7 +160,6 @@ def getPhotosWithLimit(albumId, albumTitle, limit):
                            limit=limit)
 
 
-# Uruchomienie aplikacji
-if __name__ == '__main__':
+if __name__ == '__main__':  # Uruchomienie aplikacji
     print("http://127.0.0.1:5000/")
     app.run(debug=True)
