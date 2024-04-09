@@ -178,6 +178,7 @@ def getPhotosWithLimit(albumId, albumTitle, limit):
                            albumTitle=albumTitle,
                            limit=limit)
 
+
 # Uruchomienie aplikacji
 if __name__ == '__main__':
     print("http://127.0.0.1:5000/")
