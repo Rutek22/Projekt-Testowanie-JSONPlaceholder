@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -8,6 +9,7 @@
     <title>Zdjęcia</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
+
 <body>
     <div class="container">
         <div class="nav">
@@ -24,12 +26,12 @@
         </div>
 
         <div class="limit">
-    <form method="GET" action="{{ url_for('getPhotosWithLimit', albumId=albumId, albumTitle=albumTitle, limit=limit) }}">
-        <label for="limit">Limit wyświetlanych zdjęć:</label>
-        <input type="number" id="limit" name="limit" min="1" max="50" value="{{ limit }}">
-        <button>Zastosuj</button>
-    </form>
-</div>
+            <form method="GET" action="{{ url_for('getPhotosWithLimit', albumId=albumId, albumTitle=albumTitle, limit=limit) }}">
+                <label for="limit">Limit wyświetlanych zdjęć:</label>
+                <input type="number" id="limit" name="limit" min="1" max="50" value="{{ limit }}">
+                <button>Zastosuj</button>
+            </form>
+        </div>
 
         <div class="content">
              <div class="album">
@@ -49,17 +51,16 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     <script>
-    document.getElementById('limit').addEventListener('change', function() {
-        var albumId = "{{ albumId }}";
-        var albumTitle = "{{ albumTitle }}";
-        var limit = this.value;
-        document.querySelector('.limit form').action = "/albums/" + albumId + "/photos/" + albumTitle + "/" + limit;
-    });
-</script>
+        document.getElementById('limit').addEventListener('change', function() {
+            var albumId = "{{ albumId }}";
+            var albumTitle = "{{ albumTitle }}";
+            var limit = this.value;
+            document.querySelector('.limit form').action = "/albums/" + albumId + "/photos/" + albumTitle + "/" + limit;
+        });
+    </script>
 
 </body>
 </html>
