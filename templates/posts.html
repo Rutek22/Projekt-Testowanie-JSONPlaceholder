@@ -1,173 +1,15 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Posty</title>
-    <style>
-        * {
-            margin: 0 auto;
-            font-family: 'Helvetica';
-        }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            background: #EEEEF0;
-        }
-
-        .nav {
-            background: #FFFFFF;
-            width: 100%;
-            display: flex;
-            height: 70px;
-            align-items: center;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            color: #0D6EFD;
-        }
-
-        .name {
-            width: 40%;
-        }
-
-        .navigation {
-            width: 40%;
-        }
-
-        .nav ul {
-            list-style: none;
-            display: flex;
-        }
-
-        a {
-            display: block;
-            text-decoration: none;
-            color: #0D6EFD;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        .content {
-            margin: 0 auto;
-            background: #FFFFFF;
-            padding: 30px;
-            width: 90%;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 8px 8px 24px rgba(62, 62, 74, 1);
-            margin-bottom: 50px;
-        }
-
-        .post {
-            padding: 30px;
-            border: 1px solid #0D6EFD;
-            width: 90%;
-            margin: 20px auto;
-            box-shadow: 8px 8px 24px rgba(62, 62, 74, 1);
-        }
-
-        .post h2 {
-            font-size: 1.3rem;
-            color: #0D6EFD;
-            margin-bottom: 10px;
-        }
-
-        .post p {
-            width: 100%;
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-        }
-
-        .post h3 {
-            width: 100%;
-            font-size: 1.1rem;
-            color: #a5d1ab;
-        }
-
-        .post ul {
-            width: 100%;
-            padding: 0 0;
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .post li {
-            margin-top: 20px;
-            width: 100%;
-        }
-
-        .limit {
-            align-items: center;
-            background: #FFFFFF;
-            width: 100%;
-            margin: 20px auto;
-            padding: 30px 0;
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        .filter {
-            align-items: center;
-            background: #FFFFFF;
-            width: 100%;
-            margin: 0 auto;
-            padding: 30px 0;
-            display: flex;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-
-        form {
-            display: flex;
-            flex-wrap: wrap;
-            flex-direction: column;
-            justify-content: center;
-            align-content: center;
-            align-items: center;
-        }
-
-        .limit label, .filter label {
-            font-size: 1.7rem;
-            color: #0D6EFD;
-            padding: 5px 0;
-        }
-
-        .limit input, .filter input {
-            text-align: center;
-            font-size: 1.3rem;
-            color: #0D6EFD;
-            border: 1px solid #0D6EFD;
-            margin: 10px 20px;
-            width: 50px;
-        }
-
-        .limit button, .filter button {
-            margin-top: 10px;
-            border: 1px solid #FFFFFF;
-            font-size: 1.5rem;
-            background: #0D6EFD;
-            color: #FFFFFF;
-            padding: 5px 20px;
-            transition: 0.7s;
-        }
-
-        .limit button:hover, .filter:hover {
-            border: 1px solid #0D6EFD;
-            background: #FFFFFF;
-            color: #0D6EFD;
-        }
-
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
+
 <body>
     <div class="container">
         <div class="nav">
@@ -184,20 +26,18 @@
         </div>
 
         <div class="limit">
-    <form method="GET" action="{{ url_for('getPostsWithLimit', limit_posts=limit_posts, limit_comments=limit_comments, min_chars=min_chars, max_chars=max_chars) }}">
-        <label for="limit_posts">Limit wyświetlanych postów: </label>
-        <input type="number" id="limit_posts" name="limit_posts" min="1" max="100" value="{{ limit_posts }}">
-        <label for="limit_comments">Limit wyświetlanych komentarzy: </label>
-        <input type="number" id="limit_comments" name="limit_comments" min="1" max="5" value="{{ limit_comments }}">
-        <label for="min_chars">Minimalna liczba znaków:</label>
-        <input type="number" id="min_chars" name="min_chars" min="0" required value="{{ min_chars }}" >
-        <label for="max_chars">Maksymalna liczba znaków:</label>
-        <input type="number" id="max_chars" name="max_chars" min="0" required value="{{ max_chars }}">
-        <button>Zastosuj</button>
-    </form>
-</div>
-
-
+            <form class="posts-form" method="GET" action="{{ url_for('getPostsWithLimit', limit_posts=limit_posts, limit_comments=limit_comments, min_chars=min_chars, max_chars=max_chars) }}">
+                <label for="limit_posts">Limit wyświetlanych postów: </label>
+                <input type="number" id="limit_posts" name="limit_posts" min="1" max="100" value="{{ limit_posts }}">
+                <label for="limit_comments">Limit wyświetlanych komentarzy: </label>
+                <input type="number" id="limit_comments" name="limit_comments" min="1" max="5" value="{{ limit_comments }}">
+                <label for="min_chars">Minimalna liczba znaków:</label>
+                <input type="number" id="min_chars" name="min_chars" min="0" required value="{{ min_chars }}" >
+                <label for="max_chars">Maksymalna liczba znaków:</label>
+                <input type="number" id="max_chars" name="max_chars" min="0" required value="{{ max_chars }}">
+                <button>Zastosuj</button>
+            </form>
+        </div>
 
         <div class="content">
             {% for post in posts %}
@@ -231,10 +71,6 @@
             var limitPosts = document.getElementById('limit_posts').value;
             document.querySelector('.limit form').action = "/posts/" + limitPosts + "/" + this.value;
         });
-        window.onload = function() {
-        document.getElementById('min_chars').value = 1; // Ustawienie wartości domyślnej dla minimalnej liczby znaków
-        document.getElementById('max_chars').value = 500; // Ustawienie wartości domyślnej dla maksymalnej liczby znaków
-    };
     </script>
 
 </body>
