@@ -97,7 +97,8 @@ def getPostsWithLimit(limit_posts, limit_comments):
         try:
             min_chars = int(min_chars)
             max_chars = int(max_chars)
-            posts = [post for post in posts if min_chars <= len(post['body']) <= max_chars]
+            posts = [post for post in posts if min_chars <= len(post['body'])
+                     <= max_chars]
         except ValueError:
             return \
                 (jsonify
