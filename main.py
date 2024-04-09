@@ -97,7 +97,9 @@ def getPostsWithLimit(limit_posts, limit_comments):
                            posts=posts[:limit_posts],
                            comments=comments,
                            limit_posts=limit_posts,
-                           limit_comments=limit_comments)
+                           limit_comments=limit_comments,
+                           min_chars=min_chars,
+                           max_chars=max_chars)
 
 
 @app.route('/albums')  # /albums - albums.html

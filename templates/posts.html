@@ -231,10 +231,6 @@
             var limitPosts = document.getElementById('limit_posts').value;
             document.querySelector('.limit form').action = "/posts/" + limitPosts + "/" + this.value;
         });
-        window.onload = function() {
-        document.getElementById('min_chars').value = 1; // Ustawienie wartości domyślnej dla minimalnej liczby znaków
-        document.getElementById('max_chars').value = 500; // Ustawienie wartości domyślnej dla maksymalnej liczby znaków
-    };
     </script>
 
 </body>
