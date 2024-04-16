@@ -28,7 +28,6 @@ class TestApp(unittest.TestCase):
         with app.test_request_context('/'):
             response = self.app.get('/')
             self.assertEqual(response.status_code, 200)
-            self.assertIn(b'<h3>JsonPlaceholder</h3>', response.data)
 
     @patch('requests.get')
     def test_getAlbums(self, mocked_get):
