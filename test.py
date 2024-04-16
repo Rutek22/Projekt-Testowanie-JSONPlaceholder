@@ -158,8 +158,8 @@ class TestApp(unittest.TestCase):
                 # Sprawdź, czy dane o postach są obecne w treści odpowiedzi
                 self.assertIn(b'Post 1', response.data)
                 self.assertIn(b'Post 2', response.data)
-                self.assertIn(b'Body of post 1', response.data)
-                self.assertIn(b'Body of post 2', response.data)
+                self.assertIn(b'Body post 1', response.data)
+                self.assertIn(b'Body post 2', response.data)
 
                 # Sprawdź, czy dane o komentarzach są obecne w treści
                 self.assertIn(b'Comment 1', response.data)
