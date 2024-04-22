@@ -1,8 +1,11 @@
 import unittest
 from unittest.mock import patch
 from unittest.mock import MagicMock
+
+import requests
 from flask import Flask
 from main import app, API_URL
+
 
 
 class TestApp(unittest.TestCase):
@@ -213,6 +216,31 @@ class TestApp(unittest.TestCase):
                 self.assertIn(b'Comment 1', response.data)
                 self.assertIn(b'Comment 2', response.data)
                 self.assertIn(b'Comment 3', response.data)
+
+    def test_css_contract(self):
+        # Adres URL, z którego pobieramy plik CSS
+        css_url = 'https://raw.githubusercontent.com/Rutek22/Projekt-Testowanie-JSONPlaceholder/0b551f4e1ce5a408c7c569354dbf966e8f2318cf/static/css/main.css'
+
+        # Wywołanie zapytania HTTP GET w celu pobrania pliku CSS
+        response = requests.get(css_url)
+
+        # Sprawdzenie, czy odpowiedź serwera ma kod statusu 200 (OK)
+        self.assertEqual(response.status_code, 200, "Failed to retrieve CSS file")
+
+
+        # Sprawdzenie, czy treść odpowiedzi zawiera poprawne znaczniki CSS
+        css_tags = [   'p', 'h1', 'h2', 'h3', 'a', 'ul', 'ol',
+                    'li']
+        response_text = response.text.lower()
+        missing_tags = [tag for tag in css_tags if tag not in response_text]
+
+        # Wypisanie brakujących znaczników CSS
+        if missing_tags:
+            print("Missing CSS tags:", missing_tags)
+
+        # Sprawdzenie, czy nie ma brakujących znaczników
+        self.assertFalse(missing_tags, "Content does not contain CSS tags")
+
 
 
 if __name__ == '__main__':
