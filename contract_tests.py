@@ -6,9 +6,11 @@ API_URL = 'https://jsonplaceholder.typicode.com/'
 
 """
 Testy te sprawdzają czy odwołanie się do poszczególnych endpointów
-zwraca odpowiedź HTTP o kodzie statusu 200 i czy w treści odpowiedzi znajduje się fraza
+zwraca odpowiedź HTTP o kodzie statusu 200
+ i czy w treści odpowiedzi znajduje się fraza
 (Albumy, Zdjęcia, Posty)
 """
+
 
 @pytest.mark.contract
 def test_get_albums():
@@ -25,6 +27,7 @@ def test_get_albums():
     assert b'albums' in response.data
     assert b'photos' in response.data
     assert b'limit' in response.data
+
 
 @pytest.mark.contract
 def test_get_albums_with_limit():
@@ -59,6 +62,7 @@ def test_get_photos():
     assert b'albumId' in response.data
     assert b'albumTitle' in response.data
     assert b'limit' in response.data
+
 
 @pytest.mark.contract
 def test_get_photos_with_limit():
@@ -97,6 +101,7 @@ def test_get_posts():
     assert b'min_chars' in response.data
     assert b'max_chars' in response.data
 
+
 @pytest.mark.contract
 def test_get_posts_with_limit():
     response = app.test_client().get('/posts/5/5')
@@ -117,10 +122,16 @@ def test_get_posts_with_limit():
     assert b'min_chars' in response.data
     assert b'max_chars' in response.data
 
+
 @pytest.mark.contract
 def test_css_contract():
     # Adres URL, z którego pobieramy plik CSS
-    css_url = 'https://raw.githubusercontent.com/Rutek22/Projekt-Testowanie-JSONPlaceholder/0b551f4e1ce5a408c7c569354dbf966e8f2318cf/static/css/main.css'
+    css_url = ('https://raw.githubusercontent.com/'
+               'Rutek22/Projekt-Testowanie'
+               '-JSONPlaceholder/'
+               '0b551f4e1ce5a408c7c5'
+               '69354dbf966e8f2318cf/'
+               'static/css/main.css')
 
     # Wywołanie zapytania HTTP GET w celu pobrania pliku CSS
     response = requests.get(css_url)
