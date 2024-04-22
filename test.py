@@ -1,12 +1,9 @@
 import unittest
 from unittest.mock import patch
 from unittest.mock import MagicMock
-
 import requests
 from flask import Flask
 from main import app, API_URL
-
-
 
 class TestApp(unittest.TestCase):
     def setUp(self):
@@ -219,27 +216,36 @@ class TestApp(unittest.TestCase):
 
     def test_css_contract(self):
         # Adres URL, z którego pobieramy plik CSS
-        css_url = 'https://raw.githubusercontent.com/Rutek22/Projekt-Testowanie-JSONPlaceholder/0b551f4e1ce5a408c7c569354dbf966e8f2318cf/static/css/main.css'
+        css_url = ('https://raw.githubusercontent.com/'
+                   'Rutek22/Projekt-Testowanie-JSONPlaceholder/'
+                   '0b551f4e1ce5a408c7c569354dbf966e8f2318cf/'
+                   'static/css/main.css')
 
-        # Wywołanie zapytania HTTP GET w celu pobrania pliku CSS
+        # Wywołanie zapytania HTTP GET w
+        # celu pobrania pliku CSS
         response = requests.get(css_url)
 
-        # Sprawdzenie, czy odpowiedź serwera ma kod statusu 200 (OK)
-        self.assertEqual(response.status_code, 200, "Failed to retrieve CSS file")
+        # Sprawdzenie, czy odpowiedź serwera ma
+        # kod statusu 200 (OK)
+        self.assertEqual(response.status_code,
+                         200, "Failed to retrieve CSS file")
 
 
-        # Sprawdzenie, czy treść odpowiedzi zawiera poprawne znaczniki CSS
+        # Sprawdzenie, czy treść odpowiedzi
+        # zawiera poprawne znaczniki CSS
         css_tags = [   'p', 'h1', 'h2', 'h3', 'a', 'ul', 'ol',
                     'li']
         response_text = response.text.lower()
-        missing_tags = [tag for tag in css_tags if tag not in response_text]
+        missing_tags = [tag for tag in css_tags if tag
+                        not in response_text]
 
         # Wypisanie brakujących znaczników CSS
         if missing_tags:
             print("Missing CSS tags:", missing_tags)
 
         # Sprawdzenie, czy nie ma brakujących znaczników
-        self.assertFalse(missing_tags, "Content does not contain CSS tags")
+        self.assertFalse(missing_tags,
+                         "Content does not contain CSS tags")
 
 
 
