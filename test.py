@@ -1,7 +1,6 @@
 import unittest
 from unittest.mock import patch
 from unittest.mock import MagicMock
-import requests
 from flask import Flask
 from main import app, API_URL
 
