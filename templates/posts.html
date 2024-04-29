@@ -28,13 +28,13 @@
         <div class="limit">
             <form class="posts-form" method="GET" action="{{ url_for('getPostsWithLimit', limit_posts=limit_posts, limit_comments=limit_comments, min_chars=min_chars, max_chars=max_chars) }}">
                 <label for="limit_posts">Limit wyświetlanych postów: </label>
-                <input type="number" id="limit_posts" name="limit_posts" min="1" max="100" value="{{ limit_posts }}">
+                <input type="number" id="limit_posts" name="limit_posts" min="1" max="100" value="{{ limit_posts }}" required>
                 <label for="limit_comments">Limit wyświetlanych komentarzy: </label>
-                <input type="number" id="limit_comments" name="limit_comments" min="1" max="5" value="{{ limit_comments }}">
+                <input type="number" id="limit_comments" name="limit_comments" min="1" max="5" value="{{ limit_comments }}" required>
                 <label for="min_chars">Minimalna liczba znaków:</label>
-                <input type="number" id="min_chars" name="min_chars" min="0" required value="{{ min_chars }}" >
+                <input type="number" id="min_chars" name="min_chars" min="0" value="{{ min_chars }}" required>
                 <label for="max_chars">Maksymalna liczba znaków:</label>
-                <input type="number" id="max_chars" name="max_chars" min="0" required value="{{ max_chars }}">
+                <input type="number" id="max_chars" name="max_chars" min="0" value="{{ max_chars }}" required>
                 <button>Zastosuj</button>
             </form>
         </div>
