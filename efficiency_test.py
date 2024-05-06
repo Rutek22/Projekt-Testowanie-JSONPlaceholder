@@ -1,45 +1,30 @@
-import time
-import requests
+from locust import HttpUser, task, between
 
-# Adres lokalny aplikacji Flask
-BASE_URL = 'http://127.0.0.1:5000/'
+class WebsiteUser(HttpUser):
+    wait_time = between(1, 5)
 
-# Test wydajnościowy dla strony głównej
-def test_index_page():
-    start_time = time.time()
-    response = requests.get(BASE_URL)
-    assert response.status_code == 200
-    print("Czas odpowiedzi strony głównej:", time.time() - start_time, "sekund")
+    @task
+    def test_index_page(self):
+        response = self.client.get("/")
+        assert response.status_code == 200
 
-# Test wydajnościowy dla strony z postami
-def test_posts_page():
-    start_time = time.time()
-    response = requests.get(BASE_URL + 'posts')
-    assert response.status_code == 200
-    assert "Posty" in response.text
-    print("Czas odpowiedzi strony postów:", time.time() - start_time, "sekund")
+    @task
+    def test_posts_page(self):
+        response = self.client.get("/posts")
+        assert response.status_code == 200
+        assert "Posty" in response.text
 
-# Test wydajnościowy dla strony z albumami
-def test_albums_page():
-    start_time = time.time()
-    response = requests.get(BASE_URL + 'albums')
-    assert response.status_code == 200
-    assert "Albumy" in response.text
-    print("Czas odpowiedzi strony albumów:", time.time() - start_time, "sekund")
+    @task
+    def test_albums_page(self):
+        response = self.client.get("/albums")
+        assert response.status_code == 200
+        assert "Albumy" in response.text
 
-# Test wydajnościowy dla strony z zdjęciami dla danego albumu
-def test_photos_page():
-    album_id = 1  # ID albumu do przetestowania
-    album_title = 'example_title'  # Tytuł albumu
-    start_time = time.time()
-    response = requests.get(BASE_URL + f'albums/{album_id}/photos/{album_title}')
-    assert response.status_code == 200
-    assert "Zdjęcia" in response.text
-    print("Czas odpowiedzi strony zdjęć dla albumu:", time.time() - start_time, "sekund")
+    @task
+    def test_photos_page(self):
+        album_id = 1  # ID albumu do przetestowania
+        album_title = 'example_title'  # Tytuł albumu
+        response = self.client.get(f"/albums/{album_id}/photos/{album_title}")
+        assert response.status_code == 200
+        assert "Zdjęcia" in response.text
 
-# Uruchomienie testów
-if __name__ == "__main__":
-    test_index_page()
-    test_posts_page()
-    test_albums_page()
-    test_photos_page()
