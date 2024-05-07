@@ -1,5 +1,6 @@
 from locust import HttpUser, task, between
 
+
 class WebsiteUser(HttpUser):
     wait_time = between(1, 5)
 
@@ -27,4 +28,3 @@ class WebsiteUser(HttpUser):
         response = self.client.get(f"/albums/{album_id}/photos/{album_title}")
         assert response.status_code == 200
         assert "Zdjęcia" in response.text
-
